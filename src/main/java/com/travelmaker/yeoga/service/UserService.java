@@ -1,34 +1,47 @@
 package com.travelmaker.yeoga.service;
 
-import java.util.List;
+import com.travelmaker.yeoga.dto.SignupDTO;
+import com.travelmaker.yeoga.model.User;
+import com.travelmaker.yeoga.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.travelmaker.yeoga.model.ACCOUNT;
-import com.travelmaker.yeoga.repository.ACCOUNTRepository;
 
-
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private ACCOUNTRepository repository;
-
-    public List<ACCOUNT> findAll() {
-        return repository.findAll();
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
-    public ACCOUNT findById(Long id) {
-        return repository.findById(id).orElse(null);
+    public ResponseEntity<?> registerUser(SignupDTO signupDTO) {
+        if (userRepository.existsByEmail(signupDTO.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: Email is already in use!");
+        }
+
+        User user = new User(
+                signupDTO.getUsername(),
+                signupDTO.getEmail(),
+                Collections.singletonList(passwordEncoder.encode(signupDTO.getPassword()))
+        );
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok("User registered successfully!");
     }
 
-    public ACCOUNT save(ACCOUNT member) {
-        return repository.save(member);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
