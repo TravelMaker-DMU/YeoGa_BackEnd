@@ -1,5 +1,6 @@
 package com.travelmaker.yeoga.service;
 
+import com.travelmaker.yeoga.Exception.ResourceNotFoundException;
 import com.travelmaker.yeoga.dto.SignupDTO;
 import com.travelmaker.yeoga.model.User;
 import com.travelmaker.yeoga.repository.UserRepository;
@@ -43,5 +44,10 @@ public class UserService {
 
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> findById(Long userId) {
+        return Optional.ofNullable(userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId)));
     }
 }

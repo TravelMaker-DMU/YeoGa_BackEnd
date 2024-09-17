@@ -1,25 +1,23 @@
-package com.travelmaker.yeoga.model;
+package com.travelmaker.yeoga.dto;
 
-import jakarta.persistence.*;
+import com.travelmaker.yeoga.model.Bookmark;
+
 import java.time.LocalDateTime;
-import java.util.Optional;
 
-@Entity
-public class Bookmark {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BookmarkDTO {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Optional<User> user;
-
     private String BookmarkId;
-
     private String BookmarkTitle;
-
     private LocalDateTime BMCDate;
+
+    public static BookmarkDTO fromEntity(Bookmark bookmark) {
+        BookmarkDTO dto = new BookmarkDTO();
+        dto.setId(bookmark.getId());
+        dto.setBookmarkId(bookmark.getBookmarkId());
+        dto.setBookmarkTitle(bookmark.getBookmarkTitle());
+        dto.setBMCDate(bookmark.getBMCDate());
+        return dto;
+    }
 
     public Long getId() {
         return id;
@@ -27,14 +25,6 @@ public class Bookmark {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Optional<User> getUser() {
-        return user;
-    }
-
-    public void setUser(Optional<User> user) {
-        this.user = user;
     }
 
     public String getBookmarkId() {

@@ -8,7 +8,10 @@ import com.travelmaker.yeoga.repository.AttractionRepository;
 import com.travelmaker.yeoga.repository.PostRepository;
 import com.travelmaker.yeoga.service.RecentViewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import com.travelmaker.yeoga.model.Page;
 import com.travelmaker.yeoga.dto.SaveRecentViewRequest;
@@ -38,8 +41,18 @@ public class RecentViewController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<RecentViewDTO>> getRecentViews(@PathVariable Long userId) {
+    public ResponseEntity<?> getRecentViews(@PathVariable Long userId, @AuthenticationPrincipal UserDetails userDetails) {
+
+        //로그인 여부 체크
+        if (userDetails == null || !userDetails.getUsername().equals(String.valueOf(userId))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요한 기능입니다.");
+        }
+
+        //최근 방문한 페이지 가져오기
         List<RecentView> recentViews = recentViewService.getRecentViewsByUser(userId);
+        if (recentViews.isEmpty()) {
+            return ResponseEntity.ok("최근 방문한 페이지가 없습니다.");
+        }
 
         List<RecentViewDTO> response = recentViews.stream()
                 .map(RecentViewDTO::fromEntity)
