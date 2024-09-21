@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bookmarks")
+@RequestMapping("/my/{username}")
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
@@ -21,7 +21,7 @@ public class BookmarkController {
     }
 
     // 북마크 추가
-    @PostMapping
+    @PostMapping("/bookmarks")
     public ResponseEntity<?> addBookmark(@RequestParam String courseId, Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         bookmarkService.addBookmark(user, courseId);
@@ -29,7 +29,7 @@ public class BookmarkController {
     }
 
     // 북마크 삭제
-    @DeleteMapping
+    @DeleteMapping("/bookmarks")
     public ResponseEntity<?> removeBookmark(@RequestParam String courseId, Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         bookmarkService.removeBookmark(user, courseId);
@@ -37,7 +37,7 @@ public class BookmarkController {
     }
 
     // 북마크 목록 조회
-    @GetMapping
+    @GetMapping("/bookmarks")
     public ResponseEntity<List<BookmarkDTO>> getBookmarks(Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         List<BookmarkDTO> bookmarks = bookmarkService.getBookmarks(user);

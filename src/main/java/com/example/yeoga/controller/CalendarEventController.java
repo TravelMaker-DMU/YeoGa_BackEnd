@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/calendar")
+@RequestMapping("/my/{username}")
 public class CalendarEventController {
 
     private final CalendarEventService calendarEventService;
@@ -21,7 +21,7 @@ public class CalendarEventController {
     }
 
     // 캘린더 이벤트 생성
-    @PostMapping
+    @PostMapping("/calendar")
     public ResponseEntity<?> createEvent(@RequestBody CalendarEventDTO eventDTO, Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         CalendarEventDTO createdEvent = calendarEventService.createEvent(user, eventDTO);
@@ -29,7 +29,7 @@ public class CalendarEventController {
     }
 
     // 사용자의 캘린더 이벤트 목록 조회
-    @GetMapping
+    @GetMapping("/calendar")
     public ResponseEntity<List<CalendarEventDTO>> getEvents(Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         List<CalendarEventDTO> events = calendarEventService.getEvents(user);
@@ -37,7 +37,7 @@ public class CalendarEventController {
     }
 
     // 특정 이벤트 조회
-    @GetMapping("/{eventId}")
+    @GetMapping("/calendar/{eventId}")
     public ResponseEntity<?> getEventById(@PathVariable int eventId) {
         Optional<CalendarEventDTO> event = calendarEventService.getEventById(eventId);
         if (event.isPresent()) {
@@ -48,7 +48,7 @@ public class CalendarEventController {
     }
 
     // 이벤트 삭제
-    @DeleteMapping("/{eventId}")
+    @DeleteMapping("/calendar/{eventId}")
     public ResponseEntity<?> deleteEvent(@PathVariable int eventId) {
         calendarEventService.deleteEvent(eventId);
         return ResponseEntity.ok("Event deleted successfully.");

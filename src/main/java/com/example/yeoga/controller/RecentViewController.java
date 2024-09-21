@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/recent")
+@RequestMapping("/my/{username}")
 public class RecentViewController {
 
     private final RecentViewService recentViewService;
@@ -20,7 +20,7 @@ public class RecentViewController {
     }
 
     // 최근 본 코스 추가
-    @PostMapping
+    @PostMapping("/recent")
     public ResponseEntity<?> addRecentView(@RequestParam String courseId, Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         recentViewService.addRecentView(user, courseId);
@@ -28,7 +28,7 @@ public class RecentViewController {
     }
 
     // 최근 본 코스 목록 조회
-    @GetMapping
+    @GetMapping("/recent")
     public ResponseEntity<List<RecentViewDTO>> getRecentViews(Authentication authentication) {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         List<RecentViewDTO> recentViews = recentViewService.getRecentViews(user);
