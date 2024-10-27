@@ -1,9 +1,9 @@
 package com.example.yeoga.config;
 
-import com.example.oauthjwt.jwt.JWTFilter;
-import com.example.oauthjwt.jwt.JWTUtil;
-import com.example.oauthjwt.oauth2.CustomSuccessHandler;
-import com.example.oauthjwt.service.CustomOAuth2UserService;
+import com.example.yeoga.jwt.JWTFilter;
+import com.example.yeoga.jwt.JWTUtil;
+import com.example.yeoga.oauth2.CustomSuccessHandler;
+import com.example.yeoga.service.CustomOAuth2UserService;
 import com.example.yeoga.jwt.CustomLogoutFilter;
 import com.example.yeoga.jwt.LoginFilter;
 import com.example.yeoga.repository.RefreshRepository;
