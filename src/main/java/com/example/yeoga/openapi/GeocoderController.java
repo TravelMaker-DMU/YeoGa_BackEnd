@@ -1,4 +1,4 @@
-package com.example.yeoga.controller;
+package com.example.yeoga.openapi;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")

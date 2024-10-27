@@ -1,4 +1,4 @@
-package com.example.yeoga.controller;
+package com.example.yeoga.openapi;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -9,36 +9,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
-public class TourCoursesController {
+public class TourController {
+
     private final RestTemplate restTemplate;
 
-    // @Value 어노테이션을 사용하여 application.properties에서 값을 주입받음
-    @Value("${tour_course.api.key}")
+    @Value("${tour.api.key}")
     private String apiKey;
 
-    @Value("${tour_course.api.base-url}")
+    @Value("${tour.api.base-url}")
     private String baseUrl;
 
-    public TourCoursesController(RestTemplate restTemplate) {
+    public TourController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    @GetMapping("/tourcourses")
-    public ResponseEntity<String> getTourCourses() {
-        int pageNo = ThreadLocalRandom.current().nextInt(1, 50);
+    @GetMapping("/tour")
+    public ResponseEntity<String> getTourData() {
+        int PageNo = ThreadLocalRandom.current().nextInt(1, 550);
         String url = baseUrl + "?ServiceKey=" + apiKey
-                + "&MobileApp=AppTest"
-                + "&MobileOS=ETC"
-                + "&PageNo=" + pageNo
-                + "&numOfRows=10"
-                + "&_type=json"
-                + "&contentTypeId=25";
+                     + "&MobileApp=AppTest"
+                     + "&MobileOS=ETC"
+                     + "&pageNo=" + PageNo
+                     + "&numOfRows=4"
+                     + "&arrange=A"
+                     + "&_type=json";
 
         try {
             String response = restTemplate.getForObject(url, String.class);

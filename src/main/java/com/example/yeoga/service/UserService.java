@@ -25,6 +25,10 @@ public class UserService {
             userDto.setId(userEntity.getId());
             userDto.setUsername(userEntity.getUsername());
             userDto.setRole(userEntity.getRole());
+            userDto.setEmail(userEntity.getEmail());
+            userDto.setBirthday(userEntity.getBirthday());
+            userDto.setTel(userEntity.getTel());
+
             // 필요한 경우 각 리스트를 변환하여 설정
             return userDto;
         }

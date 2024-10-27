@@ -1,8 +1,10 @@
 package com.example.yeoga.config;
 
+import com.example.oauthjwt.jwt.JWTFilter;
+import com.example.oauthjwt.jwt.JWTUtil;
+import com.example.oauthjwt.oauth2.CustomSuccessHandler;
+import com.example.oauthjwt.service.CustomOAuth2UserService;
 import com.example.yeoga.jwt.CustomLogoutFilter;
-import com.example.yeoga.jwt.JWTFilter;
-import com.example.yeoga.jwt.JWTUtil;
 import com.example.yeoga.jwt.LoginFilter;
 import com.example.yeoga.repository.RefreshRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,97 +23,94 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final AuthenticationConfiguration authenticationConfiguration;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomSuccessHandler customSuccessHandler;
     private final JWTUtil jwtUtil;
+    private final AuthenticationConfiguration authenticationConfiguration;
     private final RefreshRepository refreshRepository;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, RefreshRepository refreshRepository) {
-
-        this.authenticationConfiguration = authenticationConfiguration;
+    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
+                          CustomSuccessHandler customSuccessHandler,
+                          JWTUtil jwtUtil,
+                          AuthenticationConfiguration authenticationConfiguration,
+                          RefreshRepository refreshRepository) {
+        this.customOAuth2UserService = customOAuth2UserService;
+        this.customSuccessHandler = customSuccessHandler;
         this.jwtUtil = jwtUtil;
+        this.authenticationConfiguration = authenticationConfiguration;
         this.refreshRepository = refreshRepository;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-
-        return configuration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager() throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+        // CORS 설정
+        http.cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+            @Override
+            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                configuration.setAllowCredentials(true);
+                configuration.setAllowedHeaders(Collections.singletonList("*"));
+                configuration.setMaxAge(3600L);
+                configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization", "access"));
+                return configuration;
+            }
+        }));
 
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+        // CSRF 비활성화
+        http.csrf(csrf -> csrf.disable());
 
-                        CorsConfiguration configuration = new CorsConfiguration();
+        // 폼 로그인 및 HTTP Basic 인증 비활성화
+        http.formLogin(form -> form.disable())
+                .httpBasic(httpBasic -> httpBasic.disable());
 
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
-                        configuration.setAllowCredentials(true);
-                        configuration.setAllowedHeaders(Collections.singletonList("*"));
-                        configuration.setMaxAge(3600L);
+        // 세션을 상태 비저장으로 설정
+        http.sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-                        configuration.setExposedHeaders(Collections.singletonList("access"));
+        // 인가 규칙 설정
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/login", "/join", "/reissue", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                .requestMatchers("/my").hasRole("USER")
+                .requestMatchers("/admin").hasRole("ADMIN")
+                .anyRequest().authenticated());
 
-                        return configuration;
-                    }
-                }));
+        // 필터 추가
+        // JWTFilter: 모든 요청 전에 JWT 검증
+        http.addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
-        //csrf disable
-        http
-                .csrf((auth) -> auth.disable());
+        // LoginFilter: 로그인 요청을 처리
+        http.addFilterAt(new LoginFilter(authenticationManager(), jwtUtil, refreshRepository),
+                UsernamePasswordAuthenticationFilter.class);
 
-        //From 로그인 방식 disable
-        http
-                .formLogin((auth) -> auth.disable());
+        // CustomLogoutFilter: 로그아웃 요청을 처리
+        http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository),
+                LogoutFilter.class);
 
-        //http basic 인증 방식 disable
-        http
-                .httpBasic((auth) -> auth.disable());
-        //oauth2
-//        http
-//                .oauth2Login(Customizer.withDefaults());
-
-        http
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/reissue").permitAll()
-                        .requestMatchers(
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**"
-                        ).permitAll()
-                        .anyRequest().authenticated());
-
-        http
-                .addFilterAfter(new JWTFilter(jwtUtil), LoginFilter.class);
-        http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
-        http
-                .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
-
-
-        //세션 설정
-        http
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        // OAuth2 로그인 설정
+        http.oauth2Login(oauth2 -> oauth2
+                .userInfoEndpoint(userInfo -> userInfo
+                        .userService(customOAuth2UserService))
+                .successHandler(customSuccessHandler));
 
         return http.build();
     }

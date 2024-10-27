@@ -1,4 +1,4 @@
-package com.example.yeoga.controller;
+package com.example.yeoga.openapi;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

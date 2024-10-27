@@ -1,43 +1,43 @@
-package com.example.yeoga.controller;
+package com.example.yeoga.openapi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
-public class TourController {
-
+public class LodgingController {
     private final RestTemplate restTemplate;
 
-    @Value("${tour.api.key}")
+    @Autowired
+    private LodgingController lodgingController;
+
+    @Value("${trip_news.api.key}")
     private String apiKey;
 
-    @Value("${tour.api.base-url}")
+    @Value("${google_places.api.base-url}")
     private String baseUrl;
 
-    public TourController(RestTemplate restTemplate) {
+    public LodgingController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    @GetMapping("/tour")
-    public ResponseEntity<String> getTourData() {
-        int PageNo = ThreadLocalRandom.current().nextInt(1, 550);
-        String url = baseUrl + "?ServiceKey=" + apiKey
-                     + "&MobileApp=AppTest"
-                     + "&MobileOS=ETC"
-                     + "&pageNo=" + PageNo
-                     + "&numOfRows=4"
-                     + "&arrange=A"
-                     + "&_type=json";
+    @GetMapping("/Lodging")
+    public ResponseEntity<String> getLodging(
+            @RequestParam String location,
+            @RequestParam(defaultValue = "1500") int radius) {
+
+        String url = baseUrl + "/nearbysearch/json"
+                + "?key=" + apiKey
+                + "&location=" + location
+                + "&radius=" + radius
+                + "&type=lodging"
+                + "&language=ko";
 
         try {
             String response = restTemplate.getForObject(url, String.class);
