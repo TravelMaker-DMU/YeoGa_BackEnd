@@ -14,13 +14,10 @@ import org.springframework.web.client.RestTemplate;
 public class LodgingController {
     private final RestTemplate restTemplate;
 
-    @Autowired
-    private LodgingController lodgingController;
-
-    @Value("${trip_news.api.key}")
+    @Value("${google.api.key}")
     private String apiKey;
 
-    @Value("${google_places.api.base-url}")
+    @Value("${google.api.base-url}")
     private String baseUrl;
 
     public LodgingController(RestTemplate restTemplate) {

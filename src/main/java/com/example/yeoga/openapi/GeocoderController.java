@@ -1,5 +1,6 @@
 package com.example.yeoga.openapi;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class GeocoderController {
 
     @Value("${VWORLD_API_BASE_URL}")
     private String baseUrl;
+
 
     public GeocoderController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
