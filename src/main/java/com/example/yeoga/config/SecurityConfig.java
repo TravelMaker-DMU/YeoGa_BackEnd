@@ -107,10 +107,12 @@ public class SecurityConfig {
                 LogoutFilter.class);
 
         // OAuth2 로그인 설정
-        http.oauth2Login(oauth2 -> oauth2
-                .userInfoEndpoint(userInfo -> userInfo
-                        .userService(customOAuth2UserService))
-                .successHandler(customSuccessHandler));
+        http.
+                oauth2Login((oauth2)->oauth2
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService))
+                        .successHandler(customSuccessHandler));
+
 
         return http.build();
     }
