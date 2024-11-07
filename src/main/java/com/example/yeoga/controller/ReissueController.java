@@ -4,6 +4,7 @@ import com.example.yeoga.entity.RefreshEntity;
 import com.example.yeoga.jwt.JWTUtil;
 import com.example.yeoga.repository.RefreshRepository;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ public class ReissueController {
         this.refreshRepository = refreshRepository;
     }
 
+    @Operation(description = "리프레쉬 토큰 재발급 API", summary = "리프레쉬 토큰 발급")
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
 

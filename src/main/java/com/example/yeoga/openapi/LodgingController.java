@@ -1,5 +1,6 @@
 package com.example.yeoga.openapi;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class LodgingController {
     public LodgingController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
+    @Operation(description = "구글 숙소 데이터를 불러오는 OPEN API", summary = "구글 숙소")
     @GetMapping("/Lodging")
     public ResponseEntity<String> getLodging(
             @RequestParam String location,

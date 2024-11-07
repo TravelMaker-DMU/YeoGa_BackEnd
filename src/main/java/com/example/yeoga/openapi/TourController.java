@@ -1,5 +1,6 @@
 package com.example.yeoga.openapi;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class TourController {
     public TourController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
+    @Operation(description = "한국관광공사 여행지 OPEN API", summary = "한국관광공사 여행지")
     @GetMapping("/tour")
     public ResponseEntity<String> getTourData() {
         int PageNo = ThreadLocalRandom.current().nextInt(1, 550);

@@ -11,6 +11,6 @@ public class MainController {
     @GetMapping("/")
     public String mainP() {
 
-        return "Main Controller";
+        return "Server Bulid Success";
     }
 }

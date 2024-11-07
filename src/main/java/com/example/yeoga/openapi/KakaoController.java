@@ -1,5 +1,6 @@
 package com.example.yeoga.openapi;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -27,7 +28,7 @@ public class KakaoController {
 
     @Value("${kakao.api.base-url}")
     private String baseUrl;
-
+    @Operation(description = "카카오 지도를 불러오는 OPEN API", summary = "카카오지도")
     @GetMapping("/kakaomaps")
     public ResponseEntity<String> getKakaomaps(
             @RequestParam String origin,

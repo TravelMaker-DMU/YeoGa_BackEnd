@@ -4,8 +4,6 @@ import com.example.yeoga.dto.UserDTO;
 import com.example.yeoga.entity.UserEntity;
 import com.example.yeoga.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 

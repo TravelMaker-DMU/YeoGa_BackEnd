@@ -1,5 +1,6 @@
 package com.example.yeoga.openapi;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class TripNewsController {
     public TripNewsController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
+    @Operation(description = "여행소식 뉴스를 불러오기 위한 OPEN API", summary = "여행소식")
     @GetMapping("/tripnews")
     public ResponseEntity<String> getTripNews() {
         String eventStartDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
