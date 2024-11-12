@@ -5,6 +5,7 @@ import com.example.yeoga.entity.UserEntity;
 import com.example.yeoga.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,9 +15,11 @@ public class UserService {
 
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDTO getUserByUsername(String username) {
@@ -53,7 +56,9 @@ public class UserService {
             userToUpdate.setEmail(user.getEmail());
             userToUpdate.setTel(user.getTel());
             userToUpdate.setBirthday(user.getBirthday());
-            // 필요한 다른 필드들도 업데이트
+            userToUpdate.setUsername(user.getUsername());
+            userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+
             return userRepository.save(userToUpdate);
         } else {
             throw new RuntimeException("User not found");
