@@ -1,13 +1,8 @@
-# 여가
+# 숙소기반 여행 코스추천 웹 여행을가요(A.K.A 여가) 
 
-<!--배지-->
-![MIT License][license-shield] ![Repository Size][repository-size-shield] ![Issue Closed][issue-closed-shield]
-
-<!--프로젝트 대문 이미지-->
-![Project Title](img/project-title.png)
-
-<!--프로젝트 버튼-->
- [![Readme in English][readme-eng-shield]][readme-eng-url] [![View Demo][view-demo-shield]][view-demo-url] [![Report bug][report-bug-shield]][report-bug-url] [![Request feature][request-feature-shield]][request-feature-url]
+<img src="https://github.com/user-attachments/assets/885b79f2-188b-4f76-a1f2-5b28d0c50dcf" 
+     alt="logo1" 
+     style="width:30%; border: 2px solid #eee;" />
 
 <!--목차-->
 # Table of Contents
@@ -22,29 +17,23 @@
 - [[4] Contribution](#4-contribution)
 - [[5] Acknowledgement](#5-acknowledgement)
 - [[6] Contact](#6-contact)
-- [[7] License](#7-license)
 
 
 
 # [1] About the Project
-*다음 내용을 고려하여 프로젝트에 대한 **전반적인 정보**를 적으세요.*
 
-- ❗️짧은❗️ 도입부/제작 동기
-- 무슨 프로젝트인지
-- 왜 이 프로젝트를 사용해야하는지
+>우리는 여행 코스를 계획할때 많은 고민을 하게 됩니다.<br>
+>어디 지역으로 여행을 가겠다고 정하면 숙소부터 시작해서 근처에는 어떤 관광명소가 있는지,어떤 먹을거리가 있는지 열심히 조사를 하게 됩니다.<br>
+>저희는 이런 고민거리를 타파하고자 **여가**를 만들어 숙소 추천을 받거나 숙소만 정했다면 그 근처에 무엇이 있는지 추천을 해주는 사이트를 만들었습니다.
 
 ## Features
-*강조하고 싶은 **주요 기능**이나 **차별성 있는 특징**을 적으세요.*
-- 최고 멋진 **README**를 쉽게 작성할 수 있도록 *이텔릭체*로 된 **가이드**를 제공
-- 뱃지로 **언어 옵션**을 제공
+
+여가는 한국관광공사API를 활용하여 숙소와 여행지 코스, 날씨등의 데이터를 받아와 활용하였습니다.<br>
+또한 카카오지도API도 사용하여 코스를 추천 받았을 경우, 코스에 대한 이동경로를 지도에 표시하여 사용자가 코스이동을 어떻게 이동할지에 대해 도움을 주도록 노력하였습니다.
 
 ## Technologies
-***언어, 프레임워크, 주요 라이브러리**를 **버전**과 함께 나열하세요.*
 
-- [Maven](https://maven.apache.org/) 3.6.3
-- [MySQL](https://www.mysql.com/) 8.0
-- [Spring](https://spring.io/) 2.4.3
-
+<img width="725" alt="image" src="https://github.com/user-attachments/assets/6cb20d4b-8fd0-44af-aa6a-518cbe027db0" />
 
 
 # [2] Getting Started
@@ -80,21 +69,30 @@ const API_KEY = "<Your API key>";
 
 
 # [3] Usage
-***스크린샷, 코드** 등을 통해 **사용 방법**과 **사용 예제**를 보여주세요. 사용 예제별로 h2 헤더로 나누어 설명할 수 있습니다.*
 
-![usage](img/usage.png)
+<h2>로그인 화면</h2>
 
-```java
-// 몇 개의 API 사용 예제를 코드와 함께 보여주세요.
-```
+![readme3](https://github.com/user-attachments/assets/5a090074-86c3-4c76-8880-8cf986886ac0)
+
+<h2>회원가입 화면</h2>
+
+![readme4](https://github.com/user-attachments/assets/95c14ffb-8900-4d3c-a611-8f3b83217124)
+
+<h2>메인 화면(여행지 추천 부분)</h2>
+
+![image](https://github.com/user-attachments/assets/0e5fe0a1-cc4b-4da4-afcd-7b230b6e11b6)
+<h2>메인 화면(여행코스와 숙소 추천 부분)</h2>
+
+<img width="486" alt="그림1" src="https://github.com/user-attachments/assets/a94c7466-6ac7-4165-8e15-3dd5791bfce5" />
+
+<h2>여행 코스 추천 상세페이지</h2>
+
+![readme](https://github.com/user-attachments/assets/058876c9-f4da-4718-9312-263c49530f81)
 
 
+<h2></h2>
 
 # [4] Contribution
-기여해주신 모든 분들께 대단히 감사드립니다.[`contributing guide`][contribution-url]를 참고해주세요.
-이 프로젝트의 기여하신 분들을 소개합니다! 🙆‍♀️
-*이모티콘 쓰는 것을 좋아한다면, 버그 수정에 🐞, 아이디어 제공에 💡, 새로운 기능 구현에 ✨를 사용할 수 있습니다.*
-- 🐞 [dev-ujin](https://github.com/dev-ujin): 메인페이지 버그 수정
 
 
 
@@ -104,20 +102,12 @@ const API_KEY = "<Your API key>";
 - [Readme Template - Embedded Artistry](https://embeddedartistry.com/blog/2017/11/30/embedded-artistry-readme-template/)
 - [How to write a kickass Readme - James.Scott](https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9)
 - [Best-README-Template - othneildrew](https://github.com/othneildrew/Best-README-Template#prerequisites)
-- [Img Shields](https://shields.io/)
-- [Github Pages](https://pages.github.com/)
 
 
 
 # [6] Contact
-- 📧 dev.ujin518@gmail.com
-- 📋 [https://dev-ujin.github.io/contact](https://dev-ujin.github.io/contact)
+- 📧 qkrgmlxo3174@gmail.com
 
-
-
-# [7] License
-MIT 라이센스
-라이센스에 대한 정보는 [`LICENSE`][license-url]에 있습니다.
 
 
 
