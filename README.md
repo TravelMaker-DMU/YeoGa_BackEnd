@@ -39,7 +39,6 @@
 *백엔드 기준 설명입니다.*
 
 ## Installation
-*어떻게 이 프로젝트의 소스코드를 다운받을 수 있는지 설명하세요.*
 1. Repository 클론
 ```bash
 git clone https://github.com/TravelMaker-DMU/YeoGa_BackEnd.git
@@ -47,7 +46,6 @@ git clone https://github.com/TravelMaker-DMU/YeoGa_BackEnd.git
 2. 각자 ide 실행
 
 ## Configuration
-*코드의 어느 부분을 채우거나 수정해야하는지 설명하세요.*
 - `application.properties`에 각자 API키를 입력
 ```bash
 spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
@@ -133,7 +131,6 @@ spring.security.oauth2.client.registration.google.scope=profile,email
 
 
 # [5] Acknowledgement
-***유사한 프로젝트의 레포지토리** 혹은 **블로그 포스트** 등 프로젝트 구현에 영감을 준 출처에 대해 링크를 나열하세요.*
 
 - [여행 플래너 사이트 MYRO](https://www.myro.co.kr/)
 - [How to write a kickass Readme - James.Scott](https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9)
