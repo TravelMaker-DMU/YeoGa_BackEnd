@@ -4,22 +4,8 @@
      alt="logo1" 
      style="width:30%; border: 2px solid #eee;" />
 
-<!--목차-->
-# Table of Contents
-- [[1] About the Project](#1-about-the-project)
-  - [Features](#features)
-  - [Technologies](#technologies)
-- [[2] Getting Started](#2-getting-started)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-- [[3] Usage](#3-usage)
-- [[4] Contribution](#4-contribution)
-- [[5] Acknowledgement](#5-acknowledgement)
-- [[6] Contact](#6-contact)
 
-
-
-# [1] About the Project
+# About the Project
 
 >우리는 여행 코스를 계획할때 많은 고민을 하게 됩니다.<br>
 >어디 지역으로 여행을 가겠다고 정하면 숙소부터 시작해서 근처에는 어떤 관광명소가 있는지,어떤 먹을거리가 있는지 열심히 조사를 하게 됩니다.<br>
@@ -34,75 +20,7 @@
 
 <img width="725" alt="image" src="https://github.com/user-attachments/assets/6cb20d4b-8fd0-44af-aa6a-518cbe027db0" />
 
-
-# [2] Getting Started
-*백엔드 기준 설명입니다.*
-
-## Installation
-1. Repository 클론
-```bash
-git clone https://github.com/TravelMaker-DMU/YeoGa_BackEnd.git
-```
-2. 각자 ide 실행
-
-## Configuration
-- `application.properties`에 각자 API키를 입력
-```bash
-spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
-spring.datasource.url=jdbc:mariadb://${MYSQL_HOST}:${MYSQL_PORT}/${DATA_BASE_NAME}?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-spring.datasource.username=${DB_username}
-spring.datasource.password=${DB_password}
-
-spring.jwt.secret=${JWT_secret}
-
-spring.profiles.active=${profile}
-
-tour.api.key=${TOUR_API_KEY}
-tour.api.base-url=${TOUR_API_BASE_URL}
-
-tour_course.api.key=${TOUR_COURSE_API_KEY}
-tour_course.api.base-url=${TOUR_COURSE_API_BASE_URL}
-
-trip_news.api.key=${TRIP_NEWS_API_KEY}
-trip_news.api.base-url=${TRIP_NEWS_API_BASE_URL}
-
-vworld.api.key=${VWORLD_API_KEY}
-vworld.api.base-url=${VWORLD_API_BASE_URL}
-
-kakao.api.key=${KAKAO_API_KEY}
-kakao.api.base-url=${KAKAO_API_BASE_URL}
-
-
-google.api.key=${GOOGLE_API_KEY}
-google.api.base-url=${GOOGLE_API_BASE_URL}
-
-#registration
-spring.security.oauth2.client.registration.naver.client-name=naver
-spring.security.oauth2.client.registration.naver.client-id=${NAVER_CLIENT_ID}
-spring.security.oauth2.client.registration.naver.client-secret=${NAVER_CLIENT_SECRET}
-spring.security.oauth2.client.registration.naver.redirect-uri=${NAVER_REDIRECT_URI}
-spring.security.oauth2.client.registration.naver.authorization-grant-type=authorization_code
-spring.security.oauth2.client.registration.naver.scope=name,email
-
-#provider
-spring.security.oauth2.client.provider.naver.authorization-uri=https://nid.naver.com/oauth2.0/authorize
-spring.security.oauth2.client.provider.naver.token-uri=https://nid.naver.com/oauth2.0/token
-spring.security.oauth2.client.provider.naver.user-info-uri=https://openapi.naver.com/v1/nid/me
-spring.security.oauth2.client.provider.naver.user-name-attribute=response
-
-
-#registration
-spring.security.oauth2.client.registration.google.client-name=google
-spring.security.oauth2.client.registration.google.client-id=${GOOGLE_CLIENT_ID}
-spring.security.oauth2.client.registration.google.client-secret=${GOOGLE_CLIENT_SECRET}
-spring.security.oauth2.client.registration.google.redirect-uri=${GOOGLE_REDIRECT_URI}
-spring.security.oauth2.client.registration.google.authorization-grant-type=authorization_code
-spring.security.oauth2.client.registration.google.scope=profile,email
-```
-
-
-
-# [3] Usage
+# Usage
 
 <h2>로그인 화면</h2>
 
@@ -126,11 +44,11 @@ spring.security.oauth2.client.registration.google.scope=profile,email
 
 <h2></h2>
 
-# [4] Contribution
+# Contribution
 
 
 
-# [5] Acknowledgement
+# Acknowledgement
 
 - [여행 플래너 사이트 MYRO](https://www.myro.co.kr/)
 - [How to write a kickass Readme - James.Scott](https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9)
@@ -138,11 +56,11 @@ spring.security.oauth2.client.registration.google.scope=profile,email
 
 
 
-# [6] Contact
+# Contact
 - 📧 qkrgmlxo3174@gmail.com
 
 
-# [7] 아쉬운점
+# 아쉬운점
 
 > 스프링으로 뭔가를 만들어본 첫 프로젝트이기도 하고 한국관광공사 API에서 모든걸 제공해주는줄 알고
 > 비즈니스 로직은 외부 API로 받고 나머지 기능을 만드는 방향으로 프로젝트를 진행했습니다.
